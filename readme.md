@@ -1,48 +1,128 @@
+# Ninja RMM to Snipe-IT Asset Sync
 
-## Architecture
+An Azure Function that automatically synchronizes device information from Ninja RMM to Snipe-IT asset management system. This integration runs hourly to maintain an accurate inventory of your IT assets.
 
-- `src/functions/getDevices.js` - Main Azure Function that orchestrates the sync
-- `src/services/snipeService.js` - Service layer for Snipe-IT integration
+## Features
+
+### Automated Asset Management
+- Syncs device information from Ninja RMM to Snipe-IT
+- Runs automatically every hour
+- Updates existing assets with new information
+- Creates new assets as devices are added to Ninja RMM
+
+### Smart Device Categorization
+Devices are automatically categorized based on their Ninja RMM nodeClass:
+- Windows Servers
+- Windows Workstations
+- VMware Hosts
+- Other Hardware
+
+### Hardware Specifications Tracked
+- Processor count
+- Memory size (in GB)
+- Serial numbers
+- Domain information
+- Chassis type
+- Virtual machine status
+
+## Prerequisites
+
+- Node.js 18 or later
+- Azure Functions Core Tools
+- Azure subscription
+- Ninja RMM account with API access
+- Snipe-IT installation with API access
+
+## Installation
+
+1. Clone the repository:
+
+    git clone https://github.com/yourusername/ninja-snipeit-sync.git
+    cd ninja-snipeit-sync
+
+2. Install dependencies:
+
+    npm install
+
+3. Configure environment variables (see Configuration section)
+
+4. Start the function locally:
+
+    npm start
 
 ## Configuration
 
 1. Copy `local.settings.template.json` to `local.settings.json`
 2. Update the following values in `local.settings.json`:
-   - `NinjaBaseUrl`: Your Ninja RMM instance URL
-   - `NinjaClientID`: Your Ninja RMM OAuth client ID
-   - `NinjaClientSecret`: Your Ninja RMM OAuth client secret
-   - `SnipeBaseURL`: Your Snipe-IT instance API URL
-   - `SnipeAPIKey`: Your Snipe-IT API key
+
+    {
+      "Values": {
+        "NinjaBaseUrl": "https://your-ninja-instance.rmmservice.com",
+        "NinjaAuthEndpoint": "/ws/oauth/token",
+        "NinjaDeviceDetailEndpoint": "/v2/devices-detailed",
+        "NinjaClientID": "your-client-id",
+        "NinjaClientSecret": "your-client-secret",
+        "SnipeBaseURL": "https://your-snipeit-instance/api/v1",
+        "SnipeAPIKey": "your-snipe-it-api-key"
+      }
+    }
 
 Note: `local.settings.json` is excluded from source control to protect sensitive credentials.
 
-## Configuration Details
+## Architecture
 
-### Ninja RMM Configuration
-- Requires API access credentials
-- Uses OAuth2 client credentials flow
-- Needs permissions to read device information
+The codebase is organized into three main components:
 
-### Snipe-IT Configuration
-- Requires API key with permissions to:
-  - Create/update manufacturers
-  - Create/update models
-  - Create/update assets
-- API key should have appropriate access level
+### Azure Function (`src/functions/getDevices.js`)
+- Orchestrates the sync process
+- Runs on a timer trigger (hourly)
+- Validates environment variables
+- Initializes services
+
+### Ninja RMM Service (`src/services/ninjaService.js`)
+- Handles OAuth2 authentication
+- Retrieves device information
+- Filters and normalizes device data
+- Processes different device types (servers, workstations, VMware hosts)
+
+### Snipe-IT Service (`src/services/snipeService.js`)
+- Manages rate limiting (1 second between requests)
+- Handles manufacturer creation and caching
+- Manages model creation with proper categorization
+- Updates assets incrementally
+- Implements bulk data loading to minimize API calls
 
 ## Error Handling
 
-- Retries on rate limit responses
-- Logs detailed error information
-- Continues processing remaining devices if one fails
-- Validates environment variables before starting
+The application includes comprehensive error handling:
+- Environment variable validation
+- Rate limiting with automatic retries
+- Detailed error logging
+- Continues processing on individual device failures
+- API error recovery
+
+## Deployment
+
+Deploy to Azure Functions using Azure CLI:
+
+    az login
+    az functionapp deployment source config-zip -g <resource-group> -n <app-name> --src <zip-file>
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create your feature branch:
+
+    git checkout -b feature/AmazingFeature
+
+3. Commit your changes:
+
+    git commit -m 'Add some AmazingFeature'
+
+4. Push to the branch:
+
+    git push origin feature/AmazingFeature
+
 5. Open a Pull Request
 
 ## License
