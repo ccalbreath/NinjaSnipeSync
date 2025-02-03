@@ -55,8 +55,6 @@ Devices are automatically categorized based on their Ninja RMM nodeClass:
 1. Copy `local.settings.template.json` to `local.settings.json`
 2. Update the following values in `local.settings.json`:
 
-    {
-      "Values": {
         "NinjaBaseUrl": "https://your-ninja-instance.rmmservice.com",
         "NinjaAuthEndpoint": "/ws/oauth/token",
         "NinjaDeviceDetailEndpoint": "/v2/devices-detailed",
@@ -64,10 +62,7 @@ Devices are automatically categorized based on their Ninja RMM nodeClass:
         "NinjaClientSecret": "your-client-secret",
         "SnipeBaseURL": "https://your-snipeit-instance/api/v1",
         "SnipeAPIKey": "your-snipe-it-api-key"
-      }
-    }
 
-Note: `local.settings.json` is excluded from source control to protect sensitive credentials.
 
 ## Architecture
 
