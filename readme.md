@@ -18,8 +18,6 @@ Devices are automatically categorized based on their Ninja RMM nodeClass:
 - Other Hardware
 
 ### Hardware Specifications Tracked
-- Processor count
-- Memory size (in GB)
 - Serial numbers
 - Chassis type
 - Virtual machine status

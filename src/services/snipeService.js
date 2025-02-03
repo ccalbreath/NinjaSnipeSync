@@ -700,19 +700,6 @@ class SnipeService {
             changedFields.model_number = device.system.model;
         }
 
-        // Check if custom fields have actually changed
-        const currentProcessorCount = existingAsset.custom_fields?._snipeit_processor_count_1?.value || '0';
-        const currentMemory = existingAsset.custom_fields?._snipeit_memory_2?.value || '0';
-        const newMemory = Math.round(device.system.totalPhysicalMemory / (1024 * 1024 * 1024)).toString();
-
-        if (device.system.numberOfProcessors.toString() !== currentProcessorCount || 
-            newMemory !== currentMemory) {
-            changedFields.custom_fields = {
-                _snipeit_processor_count_1: device.system.numberOfProcessors,
-                _snipeit_memory_2: Math.round(device.system.totalPhysicalMemory / (1024 * 1024 * 1024))
-            };
-        }
-
         return changedFields;
     }
 
@@ -731,11 +718,7 @@ class SnipeService {
             name: device.systemName,
             serial: device.system.serialNumber,
             manufacturer_id: manufacturer.id,
-            model_number: device.system.model,
-            custom_fields: {
-                _snipeit_processor_count_1: device.system.numberOfProcessors,
-                _snipeit_memory_2: Math.round(device.system.totalPhysicalMemory / (1024 * 1024 * 1024))
-            }
+            model_number: device.system.model
         };
     }
 }
