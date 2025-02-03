@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "NinjaBaseUrl": "https://your-ninja-instance.rmmservice.com",
+    "NinjaAuthEndpoint": "/ws/oauth/token",
+    "NinjaDeviceDetailEndpoint": "/v2/devices-detailed",
+    "NinjaClientID": "your-client-id",
+    "NinjaClientSecret": "your-client-secret",
+    "SnipeBaseURL": "https://your-snipeit-instance/api/v1",
+    "SnipeAPIKey": "your-snipe-it-api-key"
+  }
+} 

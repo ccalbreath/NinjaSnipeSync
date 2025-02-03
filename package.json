@@ -1,0 +1,33 @@
+{
+  "name": "ninja-snipeit-sync",
+  "version": "1.0.0",
+  "description": "Azure Function to sync device information from Ninja RMM to Snipe-IT asset management system",
+  "main": "src/functions/getDevices.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "azure-functions",
+    "ninja-rmm",
+    "snipe-it",
+    "asset-management",
+    "inventory"
+  ],
+  "author": "Chris Calbreath",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/ninja-snipeit-sync.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ninja-snipeit-sync/issues"
+  }
+}
