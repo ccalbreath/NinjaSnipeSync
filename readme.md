@@ -7,7 +7,7 @@ An Azure Function that automatically synchronizes device information from Ninja 
 ### Automated Asset Management
 - Syncs device information from Ninja RMM to Snipe-IT
 - Runs automatically every hour
-- Updates existing assets with new information
+- Updates existing assets only when changes are detected
 - Creates new assets as devices are added to Ninja RMM
 
 ### Smart Device Categorization
@@ -21,7 +21,6 @@ Devices are automatically categorized based on their Ninja RMM nodeClass:
 - Processor count
 - Memory size (in GB)
 - Serial numbers
-- Domain information
 - Chassis type
 - Virtual machine status
 
