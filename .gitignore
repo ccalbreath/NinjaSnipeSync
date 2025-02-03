@@ -12,10 +12,7 @@ local.settings.json
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 
 # IDE - Visual Studio
 .vs/
