@@ -686,6 +686,7 @@ class SnipeService {
     getChangedFields(device, existingAsset, model, manufacturer) {
         const changedFields = {};
 
+        // Only add fields that have actually changed
         if (device.systemName !== existingAsset.name) {
             changedFields.name = device.systemName;
         }
@@ -698,13 +699,6 @@ class SnipeService {
         if (device.system.model !== existingAsset.model_number) {
             changedFields.model_number = device.system.model;
         }
-
-        // Always update custom fields and notes
-        changedFields.custom_fields = {
-            _snipeit_processor_count_1: device.system.numberOfProcessors,
-            _snipeit_memory_2: Math.round(device.system.totalPhysicalMemory / (1024 * 1024 * 1024))
-        };
-        changedFields.notes = `Last synced from Ninja RMM: ${new Date().toISOString()}\nDomain: ${device.system.domain}\nRole: ${device.system.domainRole}`;
 
         return changedFields;
     }
@@ -724,12 +718,7 @@ class SnipeService {
             name: device.systemName,
             serial: device.system.serialNumber,
             manufacturer_id: manufacturer.id,
-            model_number: device.system.model,
-            notes: `Last synced from Ninja RMM: ${new Date().toISOString()}\nDomain: ${device.system.domain}\nRole: ${device.system.domainRole}`,
-            custom_fields: {
-                _snipeit_processor_count_1: device.system.numberOfProcessors,
-                _snipeit_memory_2: Math.round(device.system.totalPhysicalMemory / (1024 * 1024 * 1024))
-            }
+            model_number: device.system.model
         };
     }
 }
